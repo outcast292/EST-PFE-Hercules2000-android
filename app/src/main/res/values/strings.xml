@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Hercules 2000</string>
+    <string name="nom_moteur">Nom moteur</string>
+    <string name="valider">Valider</string>
+</resources>

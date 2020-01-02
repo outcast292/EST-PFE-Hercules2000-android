@@ -1,0 +1,4 @@
+include ':app'
+include ':croller'
+include ':seekbar'
+rootProject.name='My Application'

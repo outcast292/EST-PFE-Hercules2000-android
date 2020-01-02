@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="whiteGray">#D7D8D9</color>
+    <color name="bgGray">#323232</color>
+    <color name="redPink">#F66867</color>
+    <color name="lighPink">#F66867</color>
+</resources>
