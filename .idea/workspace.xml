@@ -20,9 +20,7 @@
     <option name="TOOL_WINDOW_REGEXP_FILTER" value="false" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="14f7c60f-206f-4bad-9c6e-1443a76c724a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="14f7c60f-206f-4bad-9c6e-1443a76c724a" name="Default Changelist" comment="Initial commit">
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -47,7 +45,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="21">
-              <caret line="37" column="45" lean-forward="true" selection-start-line="37" selection-start-column="45" selection-end-line="37" selection-end-column="45" />
+              <caret line="37" column="45" selection-start-line="37" selection-start-column="45" selection-end-line="37" selection-end-column="45" />
             </state>
           </provider>
           <provider editor-type-id="android-designer2" />
@@ -56,7 +54,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="651">
+            <state relative-caret-position="544">
               <caret line="31" column="38" selection-start-line="31" selection-start-column="38" selection-end-line="31" selection-end-column="38" />
             </state>
           </provider>
@@ -379,7 +377,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1296" height="1000" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" sideWeight="0.50161815" side_tool="true" weight="0.2079288" />
       <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.49838188" visible="true" weight="0.28883496" />
@@ -498,35 +495,16 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/croller_view.xml" />
     <entry file="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3f63da7dfb22f792fd5e0e8e85ad3ed9/croller-1.0.7/res/values/values.xml" />
     <entry file="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3f63da7dfb22f792fd5e0e8e85ad3ed9/croller-1.0.7/res/layout/croller_view.xml" />
-    <entry file="file://$PROJECT_DIR$/flexibleciruclarseekbar/src/main/res/drawable/circular.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/flexibleciruclarseekbar/src/main/res/drawable/circular_shadow.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/flexibleciruclarseekbar/src/main/res/drawable/circular_slider_drawable.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/flexibleciruclarseekbar/src/main/res/drawable/popup_box.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/flexibleciruclarseekbar/src/main/java/com/skumar/flexibleciruclarseekbar/CircularSeekBar.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3424">
-          <caret line="43" column="13" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/flexibleciruclarseekbar/src/main/res/layout/popup_value.xml">
-      <provider editor-type-id="text-editor" />
-      <provider selected="true" editor-type-id="android-designer2" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/flexibleciruclarseekbar/src/main/res/drawable/circular.xml" />
+    <entry file="file://$PROJECT_DIR$/flexibleciruclarseekbar/src/main/res/drawable/circular_shadow.xml" />
+    <entry file="file://$PROJECT_DIR$/flexibleciruclarseekbar/src/main/res/drawable/circular_slider_drawable.xml" />
+    <entry file="file://$PROJECT_DIR$/flexibleciruclarseekbar/src/main/res/drawable/popup_box.xml" />
+    <entry file="file://$PROJECT_DIR$/flexibleciruclarseekbar/src/main/java/com/skumar/flexibleciruclarseekbar/CircularSeekBar.java" />
+    <entry file="file://$PROJECT_DIR$/flexibleciruclarseekbar/src/main/res/layout/popup_value.xml" />
     <entry file="file://$PROJECT_DIR$/croller/src/main/res/values/attrs.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/flexibleciruclarseekbar/src/main/res/values/attr.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/flexibleciruclarseekbar/src/main/res/values/attr.xml" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/attr.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -721,7 +699,7 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="21">
-          <caret line="37" column="45" lean-forward="true" selection-start-line="37" selection-start-column="45" selection-end-line="37" selection-end-column="45" />
+          <caret line="37" column="45" selection-start-line="37" selection-start-column="45" selection-end-line="37" selection-end-column="45" />
         </state>
       </provider>
       <provider editor-type-id="android-designer2" />
@@ -736,7 +714,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="651">
+        <state relative-caret-position="544">
           <caret line="31" column="38" selection-start-line="31" selection-start-column="38" selection-end-line="31" selection-end-column="38" />
         </state>
       </provider>
