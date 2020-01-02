@@ -30,6 +30,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation project(':croller')
     implementation project(':seekbar')
+    implementation 'com.github.BeppiMenozzi:Knob:1.9.0'
     implementation 'com.r0adkll:slidableactivity:2.1.0'
 
 
