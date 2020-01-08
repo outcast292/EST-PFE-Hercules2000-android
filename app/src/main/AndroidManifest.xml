@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.myapplication">
+    package="com.hercules2000.controlApp">
 
     <application
         android:allowBackup="true"
@@ -9,8 +9,8 @@
         android:roundIcon="@mipmap/ugh"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomeMenu"></activity>
-        <activity android:name=".HomeScreen">
+        <activity android:name="com.hercules2000.controlApp.HomeMenu"></activity>
+        <activity android:name="com.hercules2000.controlApp.HomeScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="com.hercules2000.controlApp.MainActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme" />
     </application>
 
