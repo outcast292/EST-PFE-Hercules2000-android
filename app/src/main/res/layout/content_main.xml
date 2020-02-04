@@ -10,58 +10,60 @@
 
     <TextView
         android:id="@+id/nomMoteur"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="12dp"
+        android:layout_width="265dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="44dp"
         android:gravity="center"
         android:text="@string/nom_moteur"
         android:textAllCaps="true"
         android:textColor="@color/whiteGray"
         android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/knobAngle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <com.vashisthg.startpointseekbar.StartPointSeekBar
-        android:id="@+id/knobAngle"
-        android:layout_width="231dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="116dp"
-        app:defaultBackgroundColor="@color/whiteGray"
-        app:defaultBackgroundRangeColor="@color/redPink"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
         app:layout_constraintBottom_toTopOf="@+id/knobVitesse"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nomMoteur" />
-
-
-    <TextView
-        android:id="@+id/angletxtValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/knobAngle"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="10dp"
-        android:text="Angle de rotation"
-        android:textColor="@color/whiteGray"
-        android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/knobAngle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nomMoteur"
-        app:layout_constraintVertical_bias="0.979" />
+        app:layout_constraintVertical_bias="0.783"
+        tools:layout_editor_absoluteX="0dp">
+
+        <com.vashisthg.startpointseekbar.StartPointSeekBar
+            android:id="@+id/knobAngle"
+            android:layout_width="231dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="-60dp"
+            app:defaultBackgroundColor="@color/whiteGray"
+            app:defaultBackgroundRangeColor="@color/redPink"
+            app:layout_constraintBottom_toTopOf="@+id/angletxtValue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/angletxtValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/knobAngle"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="30dp"
+            android:text="Angle de rotation"
+            android:textColor="@color/whiteGray"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/knobAngle" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.sdsmdg.harjot.crollerTest.Croller
         android:id="@+id/knobVitesse"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_marginStart="45dp"
-        android:layout_marginEnd="45dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="56dp"
         android:padding="20dp"
         app:back_circle_color="#EDEDED"
         app:indicator_color="@color/redPink"
@@ -71,8 +73,8 @@
         app:label_color="@color/whiteGray"
         app:layout_constraintBottom_toTopOf="@+id/bntValider"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/knobAngle"
         app:main_circle_color="@color/bgGray"
         app:max="30"
         app:min="1"
@@ -88,7 +90,6 @@
         android:text="@string/valider"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/knobVitesse" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.widget.TextView;
 
+import com.hercules2000.control.ConnectionHandler;
 import com.r0adkll.slidr.Slidr;
 import com.sdsmdg.harjot.crollerTest.*;
 import com.vashisthg.startpointseekbar.StartPointSeekBar;
@@ -101,10 +102,15 @@ public class MainActivity extends AppCompatActivity {
 
         int angleMouvement = angleSaisie;
         int vitesseMouvement = knobVitesse.getProgress() + 1;
+
         String signe = ((angleMouvement>0) ? "+" : "");
+        String COMMANDE = lettreMoteur  + signe + angleMouvement + ":" + vitesseMouvement;
 
         if (lettreMoteur != null )
-        {showDialog("Commande", lettreMoteur + ":" + signe + angleMouvement + ":" + vitesseMouvement );}
+        {
+            //showDialog("Commande",  );
+            ConnectionHandler.sendMessage(COMMANDE);
+             }
         else        showDialog("Erreur", "Veuillez choisir un moteur" );
 
 
@@ -127,5 +133,14 @@ public class MainActivity extends AppCompatActivity {
             lettreMoteur=nomM.substring(0,1);
     }
 
+/*
+    public String getAngle(char moteur){
 
+        String dollar = "B+100:29E-103:29C-089:29R+047:29T+090:29";
+
+        String angle;
+
+        angle = (() ? "" : "")
+    }
+*/
 }

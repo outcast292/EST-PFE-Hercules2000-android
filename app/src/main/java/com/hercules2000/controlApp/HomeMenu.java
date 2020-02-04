@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.hercules2000.control.Connection;
+
 public class HomeMenu extends AppCompatActivity {
 
     @Override
@@ -19,9 +21,9 @@ public class HomeMenu extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
-    public void btnSettings(View v)
-    {
-        showDialog("Erreur", "En cours de construction");
+    public void btnSettings(View v) {
+        Intent intent = new Intent(this, Connection.class);
+        startActivity(intent);
     }
 
     public void showDialog(String title ,String message) {
