@@ -42,7 +42,7 @@ public class Connection extends AppCompatActivity {
     public void connectBtn(View V) {
 
         ConnectionHandler.run(adrIP.getText().toString(),Integer.parseInt(port.getText().toString()));
-        if (!ConnectionHandler.isConnected()){
+        if (!ConnectionHandler.ismRun()){
             showDialog("Erreur de connection !","Veuiller verfier l'ip et port");
         }
         else {
@@ -53,7 +53,7 @@ public class Connection extends AppCompatActivity {
     }
 
     public void __ifConnected(){
-            if (ConnectionHandler.isConnected())
+            if (ConnectionHandler.ismRun())
             {
                 conBtn.setText("Disconnect");
                 conBtn.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +66,7 @@ public class Connection extends AppCompatActivity {
     }
     public void __ifDisconnected()
     {
-        if (!ConnectionHandler.isConnected())
+        if (!ConnectionHandler.ismRun())
         {
             conBtn.setText("Connect");
             conBtn.setOnClickListener(new View.OnClickListener() {
@@ -78,14 +78,14 @@ public class Connection extends AppCompatActivity {
         }
     }
     public void disconnectBtn(){
+
         ConnectionHandler.stopClient();
         __ifDisconnected();
     }
 
     public void getArmStat(){
-            ConnectionHandler.sendMessage("$");
+        ConnectionHandler.sendMessage("$");
+        ConnectionHandler.readMessage();
     }
 
-    public void messageReceived(String message){
-    }
 }

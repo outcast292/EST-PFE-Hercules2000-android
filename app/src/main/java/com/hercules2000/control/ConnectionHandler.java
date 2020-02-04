@@ -22,16 +22,29 @@ public class ConnectionHandler {
 
     }
 
-    public static Boolean isConnected(){
-        if(mRun == true)
-            return true;
-        else
-            return false;
+    public static boolean ismRun() {
+        return mRun;
     }
+
     public static void sendMessage(String message) {
         if (mBufferOut != null && !mBufferOut.checkError()) {
             mBufferOut.println(message);
             mBufferOut.flush();
+        }
+    }
+
+    public static void readMessage() {
+
+        try {System.out.println("nnnnn1");
+            if (mBufferIn.ready()) {
+                System.out.println("ah");
+                mServerMessage = mBufferIn.readLine();
+                System.out.println(mServerMessage);
+            }System.out.println("nnnnn");
+        } catch (Exception e) {
+
+            Log.e("TCP", "C: Error", e);
+
         }
     }
 
@@ -89,6 +102,8 @@ public class ConnectionHandler {
         }
 
     }
+
+
 
     //Declare the interface. The method messageReceived(String message) will must be implemented in the MyActivity
     //class at on asynckTask doInBackground

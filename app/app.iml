@@ -151,5 +151,7 @@
     <orderEntry type="module" module-name="seekbar" />
     <orderEntry type="module" module-name="croller" />
     <orderEntry type="module" module-name="seekbar" />
+    <orderEntry type="module" module-name="croller" />
+    <orderEntry type="module" module-name="seekbar" />
   </component>
 </module>
