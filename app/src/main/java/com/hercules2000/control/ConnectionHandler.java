@@ -8,6 +8,9 @@ import java.io.*;
 
 public class ConnectionHandler {
 
+
+    public static Socket socket;
+
     public static String SERVER_IP ; //your computer IP address
     public static int SERVER_PORT ;
     private static String mServerMessage;
@@ -22,6 +25,10 @@ public class ConnectionHandler {
 
     }
 
+    public static Socket getSocket() {
+        return socket;
+    }
+
     public static boolean ismRun() {
         return mRun;
     }
@@ -33,19 +40,29 @@ public class ConnectionHandler {
         }
     }
 
-    public static void readMessage() {
+    public static StringBuffer readMessage() {
+        int i = 0;
+        StringBuffer c = new StringBuffer();
+        try {
+            Log.e("TCP Client", "C: Waiting for response ...");
 
-        try {System.out.println("nnnnn1");
-            if (mBufferIn.ready()) {
-                System.out.println("ah");
-                mServerMessage = mBufferIn.readLine();
-                System.out.println(mServerMessage);
-            }System.out.println("nnnnn");
-        } catch (Exception e) {
+            while(i != '\n') {
 
-            Log.e("TCP", "C: Error", e);
+                i = mBufferIn.read();
+                Log.e("TCP Client", "C: Received i ...");
 
+                // converts integer to character
+                c = c.append((char) i);
+
+            }
+        } catch(Exception e) {
+            // if any I/O error occurs
+            e.printStackTrace();
         }
+
+        Log.e("TCP Client", "S: " + c);
+
+        return c;
     }
 
     public static void stopClient() {
@@ -73,17 +90,29 @@ public class ConnectionHandler {
         SERVER_IP = IP;
         SERVER_PORT = port;
 
-
-
         try {
             InetAddress serverIP = InetAddress.getByName(SERVER_IP);
 
             Log.e("TCP Client", "C: Connecting...");
 
-            Socket socket = new Socket(serverIP,SERVER_PORT);
+            socket = new Socket(serverIP,SERVER_PORT);
+
+            Log.e("TCP Client", "C: Connected : " + socket.isConnected());
+            mRun = true;
+            initIO();
+
+        } catch (Exception e) {
+
+            Log.e("TCP", "C: Error", e);
+
+        }
+
+    }
+
+        public static void initIO(){
+
             try {
-                mRun = true;
-                Log.i("Debug", "inside try catch");
+                Log.i("Debug", "I/O inititalized");
 
                 mBufferOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
 
@@ -94,15 +123,7 @@ public class ConnectionHandler {
                 Log.e("TCP", "S: Error", e);
 
             }
-
-        } catch (Exception e) {
-
-            Log.e("TCP", "C: Error", e);
-
         }
-
-    }
-
 
 
     //Declare the interface. The method messageReceived(String message) will must be implemented in the MyActivity

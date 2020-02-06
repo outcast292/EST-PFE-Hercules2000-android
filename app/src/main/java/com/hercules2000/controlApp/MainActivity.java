@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.widget.TextView;
 
+import com.hercules2000.control.Connection;
 import com.hercules2000.control.ConnectionHandler;
 import com.r0adkll.slidr.Slidr;
 import com.sdsmdg.harjot.crollerTest.*;
@@ -18,8 +19,9 @@ public class MainActivity extends AppCompatActivity {
     private Croller knobVitesse;
     private StartPointSeekBar knobAngle;
     private ConstraintLayout paneCtrl;
-    String lettreMoteur;
+    char lettreMoteur;
     int angleSaisie;
+    String dollarRequest = Connection.getDollar();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
     public void initControl(){
         setContentView(R.layout.activity_main);
         initView();
-        angleValue();
         vitesseValue();
+        angleValue();
         Slidr.attach(this);
     }
     public void initView(){
@@ -78,23 +80,23 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void btnMain(View v){
-        moteurDefault(-90,90,20,"Tanguage");
+        moteurDefault(-90,90,"Tanguage");
     }
     public void btnBras(View v)
     {
-        moteurDefault(-160,160,20,"Roulis");
+        moteurDefault(-160,160,"Roulis");
     }
     public void btnCoude(View v)
     {
-        moteurDefault(-124,82,20,"Coude");
+        moteurDefault(-124,82,"Coude");
     }
     public void btnEpaule(View v)
     {
-        moteurDefault(-115,91,20,"Epaule");
+        moteurDefault(-115,91,"Epaule");
     }
     public void btnBase(View v)
     {
-        moteurDefault(-160,160,20,"Base");
+        moteurDefault(-160,160,"Base");
     }
 
 
@@ -106,15 +108,43 @@ public class MainActivity extends AppCompatActivity {
         String signe = ((angleMouvement>0) ? "+" : "");
         String COMMANDE = lettreMoteur  + signe + angleMouvement + ":" + vitesseMouvement;
 
-        if (lettreMoteur != null )
+        if (!ConnectionHandler.ismRun())
         {
-            //showDialog("Commande",  );
-            ConnectionHandler.sendMessage(COMMANDE);
+            showDialog("Socket","Veullez vous connectez!");
              }
+        else if(lettreMoteur != 0){
+            ConnectionHandler.sendMessage(COMMANDE);
+        }
         else        showDialog("Erreur", "Veuillez choisir un moteur" );
 
 
     }
+
+
+
+    public void moteurDefault(int minAngle,int maxAngle, String nomM) {
+
+            knobAngle.setAbsoluteMinMaxValue(minAngle,maxAngle);
+            nomMoteur.setText(nomM);
+            lettreMoteur=nomM.charAt(0);
+            angleSaisie = getArmStat(lettreMoteur);
+            knobAngle.setProgress(angleSaisie);
+            angletxtValue.setText("Angle de rotation : " + (int)angleSaisie + "°");
+    }
+
+    public int getArmStat(char moteur){
+
+        int angle=0;
+        for(int i=0;i<dollarRequest.length();i++)
+        {
+            if(dollarRequest.charAt(i) == moteur){
+                angle = Integer.parseInt(dollarRequest.substring(i+1,i+5));
+            }
+        }
+        return angle;
+
+    }
+
     public void showDialog(String title ,String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message)
@@ -124,23 +154,4 @@ public class MainActivity extends AppCompatActivity {
         alert.setTitle(title);
         alert.show();
     }
-    public void moteurDefault(int minAngle,int maxAngle, int angleValue, String nomM) {
-
-            knobAngle.setAbsoluteMinMaxValue(minAngle,maxAngle);
-            knobAngle.setProgress(angleValue);
-            angleSaisie=angleValue;
-            nomMoteur.setText(nomM);
-            lettreMoteur=nomM.substring(0,1);
-    }
-
-/*
-    public String getAngle(char moteur){
-
-        String dollar = "B+100:29E-103:29C-089:29R+047:29T+090:29";
-
-        String angle;
-
-        angle = (() ? "" : "")
-    }
-*/
 }

@@ -27,6 +27,7 @@ public class Connection extends AppCompatActivity {
         adrIP  = findViewById(R.id.InputIP);
         port = findViewById(R.id.InputPort);
         conBtn = findViewById(R.id.connectBtn);
+        connectionStat();
         Slidr.attach(this);
     }
     public void showDialog(String title ,String message) {
@@ -39,6 +40,15 @@ public class Connection extends AppCompatActivity {
         alert.show();
     }
 
+    public void connectionStat() {
+
+        if(ConnectionHandler.ismRun()){
+            __ifConnected();
+        }else{
+            __ifDisconnected();
+        }
+
+    }
     public void connectBtn(View V) {
 
         ConnectionHandler.run(adrIP.getText().toString(),Integer.parseInt(port.getText().toString()));
@@ -48,7 +58,6 @@ public class Connection extends AppCompatActivity {
         else {
             showDialog("Connecté !", "Connection avec " + adrIP.getText().toString() + " avec succees");
             __ifConnected();
-            getArmStat();
         }
     }
 
@@ -62,6 +71,8 @@ public class Connection extends AppCompatActivity {
                         disconnectBtn();
                     }
                 });
+                adrIP.setText(ConnectionHandler.getSocket().getInetAddress().toString().substring(1));
+                port.setText(Integer.toString(ConnectionHandler.getSocket().getPort()));
             }
     }
     public void __ifDisconnected()
@@ -83,9 +94,14 @@ public class Connection extends AppCompatActivity {
         __ifDisconnected();
     }
 
-    public void getArmStat(){
+
+    public static String getDollar()
+    {
+        String dollar = null;
         ConnectionHandler.sendMessage("$");
-        ConnectionHandler.readMessage();
+
+        return dollar = ConnectionHandler.readMessage().toString() ;
+
     }
 
 }
