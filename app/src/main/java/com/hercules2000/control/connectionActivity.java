@@ -11,7 +11,7 @@ import android.widget.EditText;
 import com.hercules2000.controlApp.R;
 import com.r0adkll.slidr.Slidr;
 
-public class Connection extends AppCompatActivity {
+public class connectionActivity extends AppCompatActivity {
 
     public EditText adrIP,port;
     Button conBtn;
@@ -42,7 +42,7 @@ public class Connection extends AppCompatActivity {
 
     public void connectionStat() {
 
-        if(ConnectionHandler.ismRun()){
+        if(connectionUtils.ismRun()){
             __ifConnected();
         }else{
             __ifDisconnected();
@@ -51,18 +51,18 @@ public class Connection extends AppCompatActivity {
     }
     public void connectBtn(View V) {
 
-        ConnectionHandler.run(adrIP.getText().toString(),Integer.parseInt(port.getText().toString()));
-        if (!ConnectionHandler.ismRun()){
+        connectionUtils.run(adrIP.getText().toString(),Integer.parseInt(port.getText().toString()));
+        if (!connectionUtils.ismRun()){
             showDialog("Erreur de connection !","Veuiller verfier l'ip et port");
         }
         else {
-            showDialog("Connecté !", "Connection avec " + adrIP.getText().toString() + " avec succees");
+            showDialog("Connecté !", "connectionActivity avec " + adrIP.getText().toString() + " avec succees");
             __ifConnected();
         }
     }
 
     public void __ifConnected(){
-            if (ConnectionHandler.ismRun())
+            if (connectionUtils.ismRun())
             {
                 conBtn.setText("Disconnect");
                 conBtn.setOnClickListener(new View.OnClickListener() {
@@ -71,13 +71,13 @@ public class Connection extends AppCompatActivity {
                         disconnectBtn();
                     }
                 });
-                adrIP.setText(ConnectionHandler.getSocket().getInetAddress().toString().substring(1));
-                port.setText(Integer.toString(ConnectionHandler.getSocket().getPort()));
+                adrIP.setText(connectionUtils.getSocket().getInetAddress().toString().substring(1));
+                port.setText(Integer.toString(connectionUtils.getSocket().getPort()));
             }
     }
     public void __ifDisconnected()
     {
-        if (!ConnectionHandler.ismRun())
+        if (!connectionUtils.ismRun())
         {
             conBtn.setText("Connect");
             conBtn.setOnClickListener(new View.OnClickListener() {
@@ -90,18 +90,10 @@ public class Connection extends AppCompatActivity {
     }
     public void disconnectBtn(){
 
-        ConnectionHandler.stopClient();
+        connectionUtils.stopClient();
         __ifDisconnected();
     }
 
 
-    public static String getDollar()
-    {
-        String dollar = null;
-        ConnectionHandler.sendMessage("$");
-
-        return dollar = ConnectionHandler.readMessage().toString() ;
-
-    }
 
 }

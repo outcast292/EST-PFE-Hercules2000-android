@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.hercules2000.control.Connection;
+import com.hercules2000.control.connectionActivity;
 
 public class HomeMenu extends AppCompatActivity {
 
@@ -18,11 +18,11 @@ public class HomeMenu extends AppCompatActivity {
     }
 
     public void openControl(View v) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, controlApp.class);
         startActivity(intent);
     }
     public void btnSettings(View v) {
-        Intent intent = new Intent(this, Connection.class);
+        Intent intent = new Intent(this, connectionActivity.class);
         startActivity(intent);
     }
 

@@ -8,20 +8,19 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.widget.TextView;
 
-import com.hercules2000.control.Connection;
-import com.hercules2000.control.ConnectionHandler;
+import com.hercules2000.control.connectionActivity;
+import com.hercules2000.control.connectionUtils;
 import com.r0adkll.slidr.Slidr;
 import com.sdsmdg.harjot.crollerTest.*;
 import com.vashisthg.startpointseekbar.StartPointSeekBar;
 
-public class MainActivity extends AppCompatActivity {
+public class controlApp extends AppCompatActivity {
     private TextView nomMoteur,angletxtValue;
     private Croller knobVitesse;
     private StartPointSeekBar knobAngle;
     private ConstraintLayout paneCtrl;
     char lettreMoteur;
     int angleSaisie;
-    String dollarRequest = Connection.getDollar();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,12 +107,12 @@ public class MainActivity extends AppCompatActivity {
         String signe = ((angleMouvement>0) ? "+" : "");
         String COMMANDE = lettreMoteur  + signe + angleMouvement + ":" + vitesseMouvement;
 
-        if (!ConnectionHandler.ismRun())
+        if (!connectionUtils.ismRun())
         {
             showDialog("Socket","Veullez vous connectez!");
              }
         else if(lettreMoteur != 0){
-            ConnectionHandler.sendMessage(COMMANDE);
+            connectionUtils.sendMessage(COMMANDE);
         }
         else        showDialog("Erreur", "Veuillez choisir un moteur" );
 
@@ -132,8 +131,18 @@ public class MainActivity extends AppCompatActivity {
             angletxtValue.setText("Angle de rotation : " + (int)angleSaisie + "°");
     }
 
+
+    public static String getDollar()
+    {
+        connectionUtils.sendMessage("$");
+
+        return connectionUtils.readMessage().toString() ;
+
+    }
+
     public int getArmStat(char moteur){
 
+        String dollarRequest = getDollar();
         int angle=0;
         for(int i=0;i<dollarRequest.length();i++)
         {

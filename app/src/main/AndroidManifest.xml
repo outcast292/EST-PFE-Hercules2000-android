@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ugh"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.hercules2000.control.Connection" android:theme="@style/AppTheme.SlidrActivityTheme"></activity>
+        <activity android:name="com.hercules2000.control.connectionActivity" android:theme="@style/AppTheme.SlidrActivityTheme"></activity>
         <activity android:name=".HomeMenu" />
         <activity android:name=".HomeScreen">
             <intent-filter>
@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".controlApp"
             android:theme="@style/AppTheme.SlidrActivityTheme" />
     </application>
 

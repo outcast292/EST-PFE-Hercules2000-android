@@ -6,12 +6,12 @@ import java.net.*;
 import java.io.*;
 
 
-public class ConnectionHandler {
+public class connectionUtils {
 
 
     public static Socket socket;
 
-    public static String SERVER_IP ; //your computer IP address
+    public static String SERVER_IP ;
     public static int SERVER_PORT ;
     private static String mServerMessage;
     private static OnMessageReceived mMessageListener = null;
@@ -20,7 +20,7 @@ public class ConnectionHandler {
     private static PrintWriter mBufferOut;
     private static BufferedReader mBufferIn;
 
-    public ConnectionHandler(OnMessageReceived listener) {
+    public connectionUtils(OnMessageReceived listener) {
         mMessageListener = listener;
 
     }
@@ -35,38 +35,35 @@ public class ConnectionHandler {
 
     public static void sendMessage(String message) {
         if (mBufferOut != null && !mBufferOut.checkError()) {
-            mBufferOut.println(message);
+            mBufferOut.println(message + "\r\n" );
             mBufferOut.flush();
         }
     }
 
     public static StringBuffer readMessage() {
         int i = 0;
-        StringBuffer c = new StringBuffer();
+        StringBuffer response = new StringBuffer();
         try {
-            Log.e("TCP Client", "C: Waiting for response ...");
+            Log.e("Hercules 2000", "C: Waiting for response ...");
 
             while(i != '\n') {
 
                 i = mBufferIn.read();
-                Log.e("TCP Client", "C: Received i ...");
 
-                // converts integer to character
-                c = c.append((char) i);
+                response = response.append((char) i);
 
             }
         } catch(Exception e) {
-            // if any I/O error occurs
             e.printStackTrace();
         }
 
-        Log.e("TCP Client", "S: " + c);
+        Log.e("Hercules 2000", "S: " + response);
 
-        return c;
+        return response;
     }
 
     public static void stopClient() {
-        Log.i("Debug", "stopClient");
+        Log.i("Hercules 2000", "stopClient");
         mRun = false;
 
         if (mBufferOut != null) {
@@ -93,37 +90,32 @@ public class ConnectionHandler {
         try {
             InetAddress serverIP = InetAddress.getByName(SERVER_IP);
 
-            Log.e("TCP Client", "C: Connecting...");
+            Log.e("Hercules 2000", "C: Connecting...");
 
             socket = new Socket(serverIP,SERVER_PORT);
 
-            Log.e("TCP Client", "C: Connected : " + socket.isConnected());
+            Log.e("Hercules 2000", "C: Connected : " + socket.isConnected());
             mRun = true;
             initIO();
 
         } catch (Exception e) {
-
-            Log.e("TCP", "C: Error", e);
-
+            Log.e("Hercules 2000", "C: Error", e);
         }
 
     }
 
-        public static void initIO(){
+    public static void initIO(){
+        try {
+            Log.i("Hercules 2000", "I/O inititalized");
 
-            try {
-                Log.i("Debug", "I/O inititalized");
+            mBufferOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
 
-                mBufferOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+            mBufferIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-                mBufferIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-            } catch (Exception e) {
-
-                Log.e("TCP", "S: Error", e);
-
-            }
+        } catch (Exception e) {
+            Log.e("Hercules 2000", "S: Error", e);
         }
+    }
 
 
     //Declare the interface. The method messageReceived(String message) will must be implemented in the MyActivity
