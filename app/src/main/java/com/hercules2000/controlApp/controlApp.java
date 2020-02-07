@@ -102,10 +102,12 @@ public class controlApp extends AppCompatActivity {
     public void btnValider(View v) {
 
         int angleMouvement = angleSaisie;
+
         int vitesseMouvement = knobVitesse.getProgress() + 1;
 
+
         String signe = ((angleMouvement>0) ? "+" : "");
-        String COMMANDE = lettreMoteur  + signe + angleMouvement + ":" + vitesseMouvement;
+        String COMMANDE = "L"+lettreMoteur  + signe + angleMouvement + ":" + vitesseMouvement;
 
         if (!connectionUtils.ismRun())
         {
@@ -124,6 +126,7 @@ public class controlApp extends AppCompatActivity {
     public void moteurDefault(int minAngle,int maxAngle, String nomM) {
 
             knobAngle.setAbsoluteMinMaxValue(minAngle,maxAngle);
+            knobVitesse.setProgress(29);
             nomMoteur.setText(nomM);
             lettreMoteur=nomM.charAt(0);
             angleSaisie = getArmStat(lettreMoteur);

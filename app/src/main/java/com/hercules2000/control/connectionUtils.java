@@ -35,24 +35,22 @@ public class connectionUtils {
 
     public static void sendMessage(String message) {
         if (mBufferOut != null && !mBufferOut.checkError()) {
-            mBufferOut.println(message + "\r\n" );
+            message = message + "\r\n";
+            mBufferOut.println(message);
+            Log.e("Hercules 2000", "C: " + message);
+
             mBufferOut.flush();
         }
     }
 
     public static StringBuffer readMessage() {
         int i = 0;
-        StringBuffer response = new StringBuffer();
+        StringBuffer response = new StringBuffer("");
         try {
             Log.e("Hercules 2000", "C: Waiting for response ...");
+                response = response.append(mBufferIn.readLine());
 
-            while(i != '\n') {
 
-                i = mBufferIn.read();
-
-                response = response.append((char) i);
-
-            }
         } catch(Exception e) {
             e.printStackTrace();
         }
