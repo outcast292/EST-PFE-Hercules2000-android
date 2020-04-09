@@ -135,6 +135,15 @@ public class controlApp extends AppCompatActivity {
     }
 
 
+    public void showDialog(String title ,String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message)
+                .setCancelable(true);
+
+        AlertDialog alert = builder.create();
+        alert.setTitle(title);
+        alert.show();
+    }
     public static String getDollar()
     {
         connectionUtils.sendMessage("$");
@@ -157,13 +166,5 @@ public class controlApp extends AppCompatActivity {
 
     }
 
-    public void showDialog(String title ,String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(message)
-                .setCancelable(true);
 
-        AlertDialog alert = builder.create();
-        alert.setTitle(title);
-        alert.show();
-    }
 }
