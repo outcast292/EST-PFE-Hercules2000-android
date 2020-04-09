@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
+import com.hercules2000.control.connectionUtils;
 import com.hercules2000.control.connectionActivity;
 
 public class HomeMenu extends AppCompatActivity {
@@ -19,9 +19,13 @@ public class HomeMenu extends AppCompatActivity {
     }
 
     public void openControl(View v) {
-        Intent intent = new Intent(this, controlApp.class);
-        startActivity(intent);
-        controllerHandler.initMotors();
+        if(connectionUtils.ismRun()){
+            Intent intent = new Intent(this, controlApp.class);
+            startActivity(intent);
+            controllerHandler.initMotors();
+        }else{
+            showDialog("Erreur","Veuillez vous connectez!");
+        }
     }
     public void btnSettings(View v) {
         Intent intent = new Intent(this, connectionActivity.class);

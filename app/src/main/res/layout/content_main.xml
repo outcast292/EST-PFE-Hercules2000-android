@@ -12,7 +12,7 @@
         android:id="@+id/nomMoteur"
         android:layout_width="265dp"
         android:layout_height="31dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="96dp"
         android:gravity="center"
         android:text="@string/nom_moteur"
         android:textAllCaps="true"
@@ -113,16 +113,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#00FF0000"
+        android:buttonTint="@color/whiteGray"
         android:onClick="onClickCheckBox"
         android:text="Mode Apprentissage"
-        android:buttonTint="@color/whiteGray"
         android:textColor="@color/whiteGray"
         android:textColorHint="@color/whiteGray"
         app:layout_constraintBottom_toTopOf="@+id/nomMoteur"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.934"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintVertical_bias="0.333" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

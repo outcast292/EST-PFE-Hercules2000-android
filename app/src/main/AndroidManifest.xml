@@ -11,15 +11,14 @@
         android:theme="@style/AppTheme">
         <activity android:name="com.hercules2000.control.connectionActivity" android:theme="@style/AppTheme.SlidrActivityTheme"></activity>
         <activity android:name=".HomeMenu" >
+        </activity>
+        <activity android:name=".HomeScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-      <!--  <activity android:name=".HomeScreen">
-
-        </activity>-->
         <activity
             android:name=".controlApp"
             android:theme="@style/AppTheme.SlidrActivityTheme" >
