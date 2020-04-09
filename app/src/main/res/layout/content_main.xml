@@ -84,12 +84,45 @@
 
     <Button
         android:id="@+id/bntValider"
-        android:layout_width="203dp"
+        android:layout_width="100dp"
         android:layout_height="75dp"
         android:onClick="btnValider"
         android:text="@string/valider"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/Ajouter"
+        app:layout_constraintHorizontal_bias="0.21"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/Ajouter"
+        android:layout_width="100dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="56dp"
+        android:onClick="btnAjouter"
+        android:text="Ajouter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.759"
+        app:layout_constraintStart_toEndOf="@+id/bntValider"
+        app:layout_constraintTop_toBottomOf="@+id/knobVitesse"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <CheckBox
+        android:id="@+id/isAppMode"
+        style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#00FF0000"
+        android:onClick="onClickCheckBox"
+        android:text="Mode Apprentissage"
+        android:buttonTint="@color/whiteGray"
+        android:textColor="@color/whiteGray"
+        android:textColorHint="@color/whiteGray"
+        app:layout_constraintBottom_toTopOf="@+id/nomMoteur"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.934"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.25" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

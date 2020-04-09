@@ -11,6 +11,7 @@ import com.hercules2000.control.connectionActivity;
 
 public class HomeMenu extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +21,7 @@ public class HomeMenu extends AppCompatActivity {
     public void openControl(View v) {
         Intent intent = new Intent(this, controlApp.class);
         startActivity(intent);
+        controllerHandler.initMotors();
     }
     public void btnSettings(View v) {
         Intent intent = new Intent(this, connectionActivity.class);
@@ -35,4 +37,6 @@ public class HomeMenu extends AppCompatActivity {
         alert.setTitle(title);
         alert.show();
     }
+
+
 }

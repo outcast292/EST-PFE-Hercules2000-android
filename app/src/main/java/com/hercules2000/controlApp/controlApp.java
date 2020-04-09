@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.hercules2000.control.connectionActivity;
@@ -14,13 +16,24 @@ import com.r0adkll.slidr.Slidr;
 import com.sdsmdg.harjot.crollerTest.*;
 import com.vashisthg.startpointseekbar.StartPointSeekBar;
 
+import static com.hercules2000.controlApp.controllerHandler.Base;
+import static com.hercules2000.controlApp.controllerHandler.Coude;
+import static com.hercules2000.controlApp.controllerHandler.Epaule;
+import static com.hercules2000.controlApp.controllerHandler.Roulis;
+import static com.hercules2000.controlApp.controllerHandler.Tanguage;
+
 public class controlApp extends AppCompatActivity {
-    private TextView nomMoteur,angletxtValue;
-    private Croller knobVitesse;
-    private StartPointSeekBar knobAngle;
+    private TextView nomMoteur, angletxtValue;
+    public static Croller knobVitesse;
+    private static StartPointSeekBar knobAngle;
     private ConstraintLayout paneCtrl;
-    char lettreMoteur;
-    int angleSaisie;
+    char lettreMoteurSelectionner;
+    private Moteur MoteurSelected;
+    static boolean isAprMode = false;
+    private String cmdApr = "";
+    private CheckBox modeApr;
+    private Button btnAjouter;
+    public static int angleSaisie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,19 +41,23 @@ public class controlApp extends AppCompatActivity {
         initControl();
     }
 
-    public void initControl(){
+    public void initControl() {
         setContentView(R.layout.activity_main);
         initView();
-        vitesseValue();
-        angleValue();
-        Slidr.attach(this);
     }
-    public void initView(){
+
+    public void initView() {
         nomMoteur = findViewById(R.id.nomMoteur);
         knobAngle = findViewById(R.id.knobAngle);
         knobVitesse = findViewById(R.id.knobVitesse);
         paneCtrl = findViewById(R.id.paneCtrl);
         angletxtValue = findViewById(R.id.angletxtValue);
+        modeApr = findViewById(R.id.isAppMode);
+        modeApr.setChecked(true);
+        btnAjouter = findViewById(R.id.Ajouter);
+        vitesseValue();
+        angleValue();
+        Slidr.attach(this);
     }
 
     public void angleValue() {
@@ -48,16 +65,17 @@ public class controlApp extends AppCompatActivity {
         knobAngle.setOnSeekBarChangeListener(new StartPointSeekBar.OnSeekBarChangeListener() {
             @Override
             public void onOnSeekBarValueChange(StartPointSeekBar bar, double value) {
-                angletxtValue.setText("Angle de rotation : " + (int)value + "°");
-                angleSaisie = (int)value;
+                angletxtValue.setText("Angle de rotation : " + (int) value + "°");
+                angleSaisie = (int) value;
             }
         });
-    }
+     }
+
     public void vitesseValue() {
         knobVitesse.setOnCrollerChangeListener(new OnCrollerChangeListener() {
             @Override
             public void onProgressChanged(Croller croller, int progress) {
-                knobVitesse.setLabel( "" + progress + " °/s");
+                knobVitesse.setLabel("" + progress + " °/s");
             }
 
             @Override
@@ -72,70 +90,89 @@ public class controlApp extends AppCompatActivity {
         });
     }
 
-    public void btnPince(View v){
+    public void btnPince(View v) {
         showDialog("Erreur", "En cours de construction");
     }
 
+    public void btnMain(View v) {
+        initMoteur(Tanguage);
+    }
 
+    public void btnBras(View v) {
+        initMoteur(Roulis);
+    }
 
-    public void btnMain(View v){
-        moteurDefault(-90,90,"Tanguage");
+    public void btnCoude(View v) {
+        initMoteur(Coude);
     }
-    public void btnBras(View v)
-    {
-        moteurDefault(-160,160,"Roulis");
+
+    public void btnEpaule(View v) {
+        initMoteur(Epaule);
     }
-    public void btnCoude(View v)
-    {
-        moteurDefault(-124,82,"Coude");
-    }
-    public void btnEpaule(View v)
-    {
-        moteurDefault(-115,91,"Epaule");
-    }
-    public void btnBase(View v)
-    {
-        moteurDefault(-160,160,"Base");
+
+    public void btnBase(View v) {
+        initMoteur(Base);
     }
 
 
     public void btnValider(View v) {
 
-        int angleMouvement = angleSaisie;
-
-        int vitesseMouvement = knobVitesse.getProgress() + 1;
-
-
-        String signe = ((angleMouvement>0) ? "+" : "");
-        String COMMANDE = "L"+lettreMoteur  + signe + angleMouvement + ":" + vitesseMouvement;
-
-        if (!connectionUtils.ismRun())
-        {
-            showDialog("Socket","Veullez vous connectez!");
-             }
-        else if(lettreMoteur != 0){
-            connectionUtils.sendMessage(COMMANDE);
+        if (!connectionUtils.ismRun()) {
+            showDialog("Socket", "Veullez vous connectez!");
+        } else if (lettreMoteurSelectionner != 0) {
+            if(getModeApr().isChecked())
+            {
+                if (cmdApr.isEmpty()){
+                   showDialog("Erreur", "Veuillez ajouter un moteur");
+                }
+                else{
+                    connectionUtils.sendMessage("L" + cmdApr);
+                    cmdApr = "";
+                 }
+            }
+            else {
+                connectionUtils.sendMessage(controllerHandler.Commande(MoteurSelected));
+            }
         }
-        else        showDialog("Erreur", "Veuillez choisir un moteur" );
-
+        else showDialog("Erreur", "Veuillez choisir un moteur");
 
     }
 
+    public void btnAjouter(View v){
 
+        if(lettreMoteurSelectionner != 0){
+            if(!MoteurSelected.existsIn(cmdApr)){
+                cmdApr = cmdApr + controllerHandler.Commande(MoteurSelected).replace("L","");
+            }else{
+                showDialog("Existe deja",  "" + MoteurSelected.getLettreMoteur());
+            }
+        }else{
+            showDialog("Erreur", "Veuillez choisir un moteur");
+        }
 
-    public void moteurDefault(int minAngle,int maxAngle, String nomM) {
+    }
+    public void onClickCheckBox(View v) {
 
-            knobAngle.setAbsoluteMinMaxValue(minAngle,maxAngle);
+        if(getModeApr().isChecked()){
+            btnAjouter.setEnabled(true);
+        }
+        else{
+            btnAjouter.setEnabled(false);
+        }
+
+    }
+    public void initMoteur(Moteur m) {
+            knobAngle.setAbsoluteMinMaxValue(m.getMinAngle(), m.getMaxAngle());
+            nomMoteur.setText(m.getNomMoteur());
+            knobAngle.setProgress(m.getCurAngle());
             knobVitesse.setProgress(29);
-            nomMoteur.setText(nomM);
-            lettreMoteur=nomM.charAt(0);
-            angleSaisie = getArmStat(lettreMoteur);
-            knobAngle.setProgress(angleSaisie);
-            angletxtValue.setText("Angle de rotation : " + (int)angleSaisie + "°");
+            lettreMoteurSelectionner = m.getLettreMoteur();
+            MoteurSelected = m;
+            angletxtValue.setText("Angle de rotation : " + m.getCurAngle() + "°");
+            angleSaisie = m.getCurAngle();
     }
 
-
-    public void showDialog(String title ,String message) {
+    public void showDialog(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message)
                 .setCancelable(true);
@@ -144,27 +181,21 @@ public class controlApp extends AppCompatActivity {
         alert.setTitle(title);
         alert.show();
     }
-    public static String getDollar()
-    {
-        connectionUtils.sendMessage("$");
 
-        return connectionUtils.readMessage().toString() ;
 
+    public CheckBox getModeApr() {
+        return modeApr;
     }
 
-    public int getArmStat(char moteur){
-
-        String dollarRequest = getDollar();
-        int angle=0;
-        for(int i=0;i<dollarRequest.length();i++)
-        {
-            if(dollarRequest.charAt(i) == moteur){
-                angle = Integer.parseInt(dollarRequest.substring(i+1,i+5));
-            }
-        }
-        return angle;
-
+    public static boolean isAprMode() {
+        return isAprMode;
     }
 
+    public static StartPointSeekBar getKnobAngle() {
+        return knobAngle;
+    }
 
+    public static int getAngleSaisie() {
+        return angleSaisie;
+    }
 }

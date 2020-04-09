@@ -97,7 +97,7 @@ public class connectionUtils {
             initIO();
 
         } catch (Exception e) {
-            Log.e("Hercules 2000", "C: Error", e);c
+            Log.e("Hercules 2000", "C: Error", e);
         }
 
     }

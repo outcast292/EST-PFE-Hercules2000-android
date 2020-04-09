@@ -24,4 +24,5 @@ public class HomeScreen extends AppCompatActivity {
             }
         },1000);
     }
+
 }

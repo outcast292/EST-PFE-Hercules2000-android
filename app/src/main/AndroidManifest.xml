@@ -10,17 +10,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="com.hercules2000.control.connectionActivity" android:theme="@style/AppTheme.SlidrActivityTheme"></activity>
-        <activity android:name=".HomeMenu" />
-        <activity android:name=".HomeScreen">
+        <activity android:name=".HomeMenu" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+      <!--  <activity android:name=".HomeScreen">
+
+        </activity>-->
         <activity
             android:name=".controlApp"
-            android:theme="@style/AppTheme.SlidrActivityTheme" />
+            android:theme="@style/AppTheme.SlidrActivityTheme" >
+        </activity>
     </application>
 
 </manifest>

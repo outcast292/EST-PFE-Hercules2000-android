@@ -56,7 +56,7 @@ public class connectionActivity extends AppCompatActivity {
             showDialog("Erreur de connection !","Veuiller verfier l'ip et port");
         }
         else {
-            showDialog("Connecté !", "connectionActivity avec " + adrIP.getText().toString() + " avec succees");
+            showDialog("Connecté !", "Connection avec " + adrIP.getText().toString() + " avec succees");
             __ifConnected();
         }
     }
