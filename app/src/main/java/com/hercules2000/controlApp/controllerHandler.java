@@ -42,7 +42,7 @@ public class controllerHandler {
 
 
         String signe = ((m.getCurAngle() > 0) ? "+" : "");
-        String commande = "L" + m.getLettreMoteur() + signe + m.getCurAngle() + ":" + vitesseMouvement;
+        String commande = "L" + m.getLettreMoteur() + signe + String.format("%03d",m.getCurAngle()) + ":" + String.format("%02d",vitesseMouvement);
 
 
         return commande;

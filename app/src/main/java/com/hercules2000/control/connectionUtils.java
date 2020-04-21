@@ -90,7 +90,7 @@ public class connectionUtils {
             InetAddress serverIP = InetAddress.getByName(SERVER_IP);
             Log.e("Hercules 2000", "C: Connecting...");
             InetSocketAddress endPoint = new InetSocketAddress(serverIP, SERVER_PORT);
-            Socket socket = new Socket();
+             socket = new Socket();
             socket.connect(endPoint, 1500);
 
             //socket = new Socket(serverIP,SERVER_PORT);
