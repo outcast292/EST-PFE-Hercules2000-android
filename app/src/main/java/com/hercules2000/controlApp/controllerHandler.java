@@ -42,7 +42,7 @@ public class controllerHandler {
 
 
         String signe = ((m.getCurAngle() > 0) ? "+" : "");
-        String commande = "L" + m.getLettreMoteur() + signe + String.format("%03d",m.getCurAngle()) + ":" + String.format("%02d",vitesseMouvement);
+        String commande = "L" + m.getLettreMoteur() + signe + String.format("%03d", map_value(m.getCurAngle(), m.getMinAngle(),m.getMaxAngle(),-511,511)) + ":" + String.format("%02d",vitesseMouvement);
 
 
         return commande;
@@ -62,6 +62,10 @@ public class controllerHandler {
             }
         }
 
+    }
+    private static int map_value(int x, int in_min, int in_max, int out_min, int out_max)
+    {
+        return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
     }
 
 }
