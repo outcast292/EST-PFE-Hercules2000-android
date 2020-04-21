@@ -86,11 +86,14 @@ public class connectionUtils {
         SERVER_PORT = port;
 
         try {
+
             InetAddress serverIP = InetAddress.getByName(SERVER_IP);
-
             Log.e("Hercules 2000", "C: Connecting...");
+            InetSocketAddress endPoint = new InetSocketAddress(serverIP, SERVER_PORT);
+            Socket socket = new Socket();
+            socket.connect(endPoint, 1500);
 
-            socket = new Socket(serverIP,SERVER_PORT);
+            //socket = new Socket(serverIP,SERVER_PORT);
 
             Log.e("Hercules 2000", "C: Connected : " + socket.isConnected());
             mRun = true;
@@ -121,4 +124,13 @@ public class connectionUtils {
     public interface OnMessageReceived {
         public void messageReceived(String message);
     }
+
+
+    public static String getServerIp() {
+        return SERVER_IP;
     }
+
+    public static int getServerPort() {
+        return SERVER_PORT;
+    }
+}
