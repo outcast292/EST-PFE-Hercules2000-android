@@ -1,12 +1,15 @@
 package com.hercules2000.controlApp;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.widget.Button;
@@ -24,6 +27,7 @@ import static com.hercules2000.controlApp.controllerHandler.Coude;
 import static com.hercules2000.controlApp.controllerHandler.Epaule;
 import static com.hercules2000.controlApp.controllerHandler.Roulis;
 import static com.hercules2000.controlApp.controllerHandler.Tanguage;
+import android.widget.Toast;
 
 public class controlApp extends AppCompatActivity {
     private TextView nomMoteur, angletxtValue;
@@ -80,6 +84,7 @@ public class controlApp extends AppCompatActivity {
         angletxtValue = findViewById(R.id.angletxtValue);
         modeApr = findViewById(R.id.isAppMode);
         btnAjouter = findViewById(R.id.Ajouter);
+        btnAjouter.setEnabled(false);
         //
         findViewById(R.id.btnPince).setOnTouchListener(listener);
         findViewById(R.id.btnMain).setOnTouchListener(listener);
@@ -104,7 +109,7 @@ public class controlApp extends AppCompatActivity {
                 angleSaisie = (int) value;
             }
         });
-     }
+    }
 
     public void vitesseValue() {
         knobVitesse.setOnCrollerChangeListener(new OnCrollerChangeListener() {
@@ -127,26 +132,38 @@ public class controlApp extends AppCompatActivity {
 
     public void btnPince(View v) {
         showDialog("Erreur", "En cours de construction");
+        //Toast.makeText(getApplicationContext(), "Pin", Toast.LENGTH_SHORT).show();
+
     }
 
     public void btnMain(View v) {
-        initMoteur(Tanguage);
+        initMoteur(Roulis);
+        Toast.makeText(getApplicationContext(), "Roulis selectionné", Toast.LENGTH_SHORT).show();
+
     }
 
     public void btnBras(View v) {
-        initMoteur(Roulis);
+        initMoteur(Tanguage);
+        Toast.makeText(getApplicationContext(), "Tangage Envoyée", Toast.LENGTH_SHORT).show();
+
     }
 
     public void btnCoude(View v) {
         initMoteur(Coude);
+        Toast.makeText(getApplicationContext(), "Coude Envoyée", Toast.LENGTH_SHORT).show();
+
     }
 
     public void btnEpaule(View v) {
         initMoteur(Epaule);
+        Toast.makeText(getApplicationContext(), "Epaule Envoyée", Toast.LENGTH_SHORT).show();
+
     }
 
     public void btnBase(View v) {
         initMoteur(Base);
+        Toast.makeText(getApplicationContext(), "Base Envoyée", Toast.LENGTH_SHORT).show();
+
     }
 
 
@@ -155,56 +172,61 @@ public class controlApp extends AppCompatActivity {
         if (!connectionUtils.ismRun()) {
             showDialog("Socket", "Veullez vous connectez!");
         } else if (lettreMoteurSelectionner != 0) {
-            if(getModeApr().isChecked())
-            {
-                if (cmdApr.isEmpty()){
-                   showDialog("Erreur", "Veuillez ajouter un moteur");
-                }
-                else{
+            if (getModeApr().isChecked()) {
+                if (cmdApr.isEmpty()) {
+                    showDialog("Erreur", "Veuillez ajouter un moteur");
+                } else {
                     connectionUtils.sendMessage("L" + cmdApr);
                     cmdApr = "";
-                 }
+                    Toast.makeText(getApplicationContext(), "Commande Envoyée", Toast.LENGTH_SHORT).show();
+
+                }
+            } else {
+                if (MoteurSelected.getCurAngle() == getAngleSaisie())
+                    showDialog("Erreur", "l'angle saisie est equivalent a l'angle d'orgine");
+                else {
+                    connectionUtils.sendMessage(controllerHandler.Commande(MoteurSelected));
+                    Toast.makeText(getApplicationContext(), "Commande Envoyée", Toast.LENGTH_SHORT).show();
+                }
             }
-            else {
-                connectionUtils.sendMessage(controllerHandler.Commande(MoteurSelected));
-            }
-        }
-        else showDialog("Erreur", "Veuillez choisir un moteur");
+
+        } else showDialog("Erreur", "Veuillez choisir un moteur");
 
     }
 
-    public void btnAjouter(View v){
+    public void btnAjouter(View v) {
 
-        if(lettreMoteurSelectionner != 0){
-            if(!MoteurSelected.existsIn(cmdApr)){
-                cmdApr = cmdApr + controllerHandler.Commande(MoteurSelected).replace("L","");
-            }else{
-                showDialog("Existe deja",  "" + MoteurSelected.getLettreMoteur());
+        if (lettreMoteurSelectionner != 0) {
+            if (!MoteurSelected.existsIn(cmdApr)) {
+                cmdApr = cmdApr + controllerHandler.Commande(MoteurSelected).replace("L", "");
+            } else {
+                showDialog("Existe deja", "" + MoteurSelected.getLettreMoteur());
             }
-        }else{
+        } else {
             showDialog("Erreur", "Veuillez choisir un moteur");
         }
 
     }
+
     public void onClickCheckBox(View v) {
 
-        if(getModeApr().isChecked()){
+        if (getModeApr().isChecked()) {
             btnAjouter.setEnabled(true);
-        }
-        else{
+        } else {
             btnAjouter.setEnabled(false);
         }
 
     }
+
     public void initMoteur(Moteur m) {
-            knobAngle.setAbsoluteMinMaxValue(m.getMinAngle(), m.getMaxAngle());
-            nomMoteur.setText(m.getNomMoteur());
-            knobAngle.setProgress(m.getCurAngle());
-            knobVitesse.setProgress(29);
-            lettreMoteurSelectionner = m.getLettreMoteur();
-            MoteurSelected = m;
-            angletxtValue.setText("Angle de rotation : " + m.getCurAngle() + "°");
-            angleSaisie = m.getCurAngle();
+        knobAngle.setAbsoluteMinMaxValue(m.getMinAngle(), m.getMaxAngle());
+        nomMoteur.setText(m.getNomMoteur());
+        knobAngle.setProgress(m.getCurAngle());
+        knobVitesse.setProgress(29);
+        lettreMoteurSelectionner = m.getLettreMoteur();
+        MoteurSelected = m;
+        angletxtValue.setText("Angle de rotation : " + m.getCurAngle() + "°");
+        angleSaisie = m.getCurAngle();
     }
 
     public void showDialog(String title, String message) {
@@ -217,12 +239,12 @@ public class controlApp extends AppCompatActivity {
         alert.show();
     }
 
-    public void viewCmd(View v){
+    public void viewCmd(View v) {
 
-        if(cmdApr == ""){
-            showDialog("Commande complexe" , "Cliquez sur Ajouter pour former votre commande complexe");
-        }else{
-            showDialog("Commande complexe" , cmdApr);
+        if (cmdApr == "") {
+            showDialog("Commande complexe", "Cliquez sur Ajouter pour former votre commande complexe");
+        } else {
+            showDialog("Commande complexe", cmdApr);
 
         }
     }
