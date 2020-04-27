@@ -27,6 +27,7 @@ import static com.hercules2000.controlApp.controllerHandler.Coude;
 import static com.hercules2000.controlApp.controllerHandler.Epaule;
 import static com.hercules2000.controlApp.controllerHandler.Roulis;
 import static com.hercules2000.controlApp.controllerHandler.Tanguage;
+
 import android.widget.Toast;
 
 public class controlApp extends AppCompatActivity {
@@ -241,27 +242,39 @@ public class controlApp extends AppCompatActivity {
 
     public void viewCmd(View v) {
 
-        if (cmdApr == "") {
-            showDialog("Commande complexe", "Cliquez sur Ajouter pour former votre commande complexe");
-        } else {
-            showDialog("Commande complexe", cmdApr);
+        if (isAprMode())
+            if (cmdApr == "") {
+                showDialog("Commande complexe", "Cliquez sur Ajouter pour former votre commande complexe");
+            } else {
+                showDialog("Commande complexe", cmdApr);
+
+            }
+        else {
+            if (MoteurSelected != null) {
+                if (MoteurSelected.getCurAngle() != getAngleSaisie())
+                    showDialog("Commande complexe", MoteurSelected.getLettreMoteur() + ((controllerHandler.map_value(getAngleSaisie(), MoteurSelected.getMinAngle(), MoteurSelected.getMaxAngle(), -511, 511) > 0) ? "+" : "-") + String.format("%03d", controllerHandler.map_value( getAngleSaisie(), MoteurSelected.getMinAngle(), MoteurSelected.getMaxAngle(), -511, 511)) + ":" + String.format("%02d", knobVitesse.getProgress()));
+                else
+                    showDialog("Erreur", "l'angle saisie est equivalent a l'angle d'orgine");
+            } else {
+                showDialog("Erreur", "aucun moteur n'est choisi");
+
+            }
 
         }
     }
+        public CheckBox getModeApr () {
+            return modeApr;
+        }
 
-    public CheckBox getModeApr() {
-        return modeApr;
-    }
+        public static boolean isAprMode () {
+            return isAprMode;
+        }
 
-    public static boolean isAprMode() {
-        return isAprMode;
-    }
+        public static StartPointSeekBar getKnobAngle () {
+            return knobAngle;
+        }
 
-    public static StartPointSeekBar getKnobAngle() {
-        return knobAngle;
+        public static int getAngleSaisie () {
+            return angleSaisie;
+        }
     }
-
-    public static int getAngleSaisie() {
-        return angleSaisie;
-    }
-}

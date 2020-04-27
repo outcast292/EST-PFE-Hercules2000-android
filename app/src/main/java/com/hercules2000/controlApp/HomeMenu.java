@@ -49,6 +49,8 @@ public class HomeMenu extends AppCompatActivity {
 
     public void openControl(View v) {
         if (connectionUtils.ismRun()) {
+            v.setBackgroundColor(Color.LTGRAY);
+            mode = 1;
             Intent intent = new Intent(this, controlApp.class);
             startActivity(intent);
 
