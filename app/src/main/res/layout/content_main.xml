@@ -1,111 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/paneCtrl"
     android:layout_width="291dp"
     android:layout_height="match_parent"
-    android:background="@color/bgGray">
+    android:background="@color/bgGray"
+    android:padding="30dp">
 
 
     <TextView
         android:id="@+id/nomMoteur"
-        android:layout_width="265dp"
-        android:layout_height="31dp"
-        android:layout_marginTop="96dp"
-        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="@string/nom_moteur"
         android:textAllCaps="true"
         android:textColor="@color/whiteGray"
         android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:layout_marginBottom="70dp"
+        />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        app:layout_constraintBottom_toTopOf="@+id/knobVitesse"
-        app:layout_constraintTop_toBottomOf="@+id/nomMoteur"
-        app:layout_constraintVertical_bias="0.783"
-        tools:layout_editor_absoluteX="0dp">
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/nomMoteur"
+        android:layout_marginBottom="80dp"
+        >
 
         <com.vashisthg.startpointseekbar.StartPointSeekBar
             android:id="@+id/knobAngle"
-            android:layout_width="231dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="-60dp"
             app:defaultBackgroundColor="@color/whiteGray"
             app:defaultBackgroundRangeColor="@color/redPink"
-            app:layout_constraintBottom_toTopOf="@+id/angletxtValue"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_centerInParent="true"/>
 
         <TextView
             android:id="@+id/angletxtValue"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/knobAngle"
-            android:layout_centerInParent="true"
-            android:layout_marginBottom="30dp"
             android:text="Angle de rotation"
             android:textColor="@color/whiteGray"
             android:textSize="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/knobAngle" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_below="@id/knobAngle"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            />
+
+
+    </RelativeLayout>
 
     <com.sdsmdg.harjot.crollerTest.Croller
         android:id="@+id/knobVitesse"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_marginBottom="56dp"
-        android:padding="20dp"
         app:back_circle_color="#EDEDED"
         app:indicator_color="@color/redPink"
         app:indicator_width="10"
         app:is_continuous="true"
         app:label="Vitesse de rotation (°/s)"
         app:label_color="@color/whiteGray"
-        app:layout_constraintBottom_toTopOf="@+id/bntValider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
         app:main_circle_color="@color/bgGray"
         app:max="30"
         app:min="1"
         app:progress_primary_color="@color/whiteGray"
         app:progress_secondary_color="@color/redPink"
-        app:start_offset="45" />
+        app:start_offset="45"
+        android:layout_below="@id/container"
+        android:layout_centerInParent="true"
+        />
 
-    <Button
-        android:id="@+id/bntValider"
-        android:layout_width="100dp"
-        android:layout_height="75dp"
-        android:onClick="btnValider"
-        android:text="@string/valider"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/Ajouter"
-        app:layout_constraintHorizontal_bias="0.21"
-        app:layout_constraintStart_toStartOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
 
-    <Button
-        android:id="@+id/Ajouter"
-        android:layout_width="100dp"
-        android:layout_height="75dp"
-        android:layout_marginTop="56dp"
-        android:onClick="btnAjouter"
-        android:text="Ajouter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.759"
-        app:layout_constraintStart_toEndOf="@+id/bntValider"
-        app:layout_constraintTop_toBottomOf="@+id/knobVitesse"
-        app:layout_constraintVertical_bias="0.0" />
+        <Button
+            android:id="@+id/bntValider"
+            android:layout_width="100dp"
+            android:layout_height="75dp"
+            android:onClick="btnValider"
+            android:text="@string/valider" />
+
+        <Button
+            android:id="@+id/Ajouter"
+            android:layout_width="100dp"
+            android:layout_height="75dp"
+            android:onClick="btnAjouter"
+            android:text="Ajouter"/>
+        />
+
+    </LinearLayout>
 
     <CheckBox
         android:id="@+id/isAppMode"
@@ -115,13 +106,12 @@
         android:backgroundTint="#00FF0000"
         android:buttonTint="@color/whiteGray"
         android:onClick="onClickCheckBox"
-        android:text="Mode Apprentissage"
+        android:text="Commande Complexe"
         android:textColor="@color/whiteGray"
         android:textColorHint="@color/whiteGray"
-        app:layout_constraintBottom_toTopOf="@+id/nomMoteur"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.333" />
+        android:layout_below="@id/knobVitesse"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="30dp"
+        />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

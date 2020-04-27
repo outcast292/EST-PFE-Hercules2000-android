@@ -41,6 +41,11 @@ public class controlApp extends AppCompatActivity {
         initControl();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     public void initControl() {
         setContentView(R.layout.activity_main);
         initView();

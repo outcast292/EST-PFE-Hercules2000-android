@@ -23,6 +23,7 @@ public class HomeMenu extends AppCompatActivity {
             Intent intent = new Intent(this, controlApp.class);
             startActivity(intent);
             connectionUtils.sendMessage("setmode 1");
+            connectionUtils.readMessage();
             controllerHandler.initMotors();
         }else{
             showDialog("Erreur","Veuillez vous connectez!");

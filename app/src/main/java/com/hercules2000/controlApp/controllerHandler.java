@@ -10,6 +10,8 @@ public class controllerHandler {
 
     public static void initMotors()
     {
+        String dollarRequest = getDollar();
+
         Tanguage = new Moteur("Tanguage", -90, 90);
         setCurrentState(Tanguage,dollarRequest);
         Roulis = new Moteur("Roulis", -160, 160);
