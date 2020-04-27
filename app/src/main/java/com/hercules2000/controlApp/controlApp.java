@@ -2,7 +2,10 @@ package com.hercules2000.controlApp;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -34,6 +37,24 @@ public class controlApp extends AppCompatActivity {
     private CheckBox modeApr;
     private Button btnAjouter;
     public static int angleSaisie;
+    private View.OnTouchListener listener = new View.OnTouchListener() {
+
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN: {
+                    v.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+                    v.invalidate();
+                    break;
+                }
+                case MotionEvent.ACTION_UP: {
+                    v.getBackground().clearColorFilter();
+                    v.invalidate();
+                    break;
+                }
+            }
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +79,20 @@ public class controlApp extends AppCompatActivity {
         paneCtrl = findViewById(R.id.paneCtrl);
         angletxtValue = findViewById(R.id.angletxtValue);
         modeApr = findViewById(R.id.isAppMode);
-        modeApr.setChecked(true);
         btnAjouter = findViewById(R.id.Ajouter);
+        //
+        findViewById(R.id.btnPince).setOnTouchListener(listener);
+        findViewById(R.id.btnMain).setOnTouchListener(listener);
+        findViewById(R.id.btnBras).setOnTouchListener(listener);
+        findViewById(R.id.btnCoude).setOnTouchListener(listener);
+        findViewById(R.id.btnEpaule).setOnTouchListener(listener);
+        findViewById(R.id.btnBase).setOnTouchListener(listener);
+
+
         vitesseValue();
         angleValue();
         Slidr.attach(this);
+
     }
 
     public void angleValue() {
