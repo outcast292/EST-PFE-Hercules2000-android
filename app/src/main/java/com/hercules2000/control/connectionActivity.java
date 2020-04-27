@@ -71,8 +71,8 @@ public class connectionActivity extends AppCompatActivity {
                         disconnectBtn();
                     }
                 });
-                adrIP.setText(connectionUtils.getSocket().getInetAddress().toString().substring(1));
-                port.setText(Integer.toString(connectionUtils.getSocket().getPort()));
+                adrIP.setText(connectionUtils.getServerIp());
+                port.setText(Integer.toString(connectionUtils.getServerPort()));
             }
     }
     public void __ifDisconnected()
