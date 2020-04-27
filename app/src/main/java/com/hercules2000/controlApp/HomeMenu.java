@@ -22,6 +22,7 @@ public class HomeMenu extends AppCompatActivity {
         if(connectionUtils.ismRun()){
             Intent intent = new Intent(this, controlApp.class);
             startActivity(intent);
+            connectionUtils.sendMessage("setmode 1");
             controllerHandler.initMotors();
         }else{
             showDialog("Erreur","Veuillez vous connectez!");
@@ -32,6 +33,14 @@ public class HomeMenu extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void btnAI(View v){
+        if(connectionUtils.ismRun()) {
+            connectionUtils.sendMessage("setmode 2");
+        }else{
+            showDialog("Erreur","Veuillez vous connectez!");
+        }
+
+    }
     public void showDialog(String title ,String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message)

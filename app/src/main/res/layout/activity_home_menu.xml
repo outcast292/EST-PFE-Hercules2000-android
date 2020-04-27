@@ -1,56 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bgGray"
-    tools:context=".HomeMenu">
+    tools:context=".HomeMenu"
+    >
 
     <ImageView
         android:id="@+id/typoLogo"
         android:layout_width="335dp"
         android:layout_height="82dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.063"
-        app:srcCompat="@mipmap/logotypo" />
+        app:srcCompat="@mipmap/logotypo"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="30dp"/>
 
-    <ImageButton
-        android:id="@+id/openControl"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="120dp"
-        android:background="@color/whiteGray"
-        android:onClick="openControl"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/open_control" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
 
-    <ImageButton
-        android:id="@+id/btnSettings"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="120dp"
-        android:layout_marginEnd="10dp"
-        android:onClick="btnSettings"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/connecticn"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:background="@color/whiteGray"
-        />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/openControl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/whiteGray"
+            android:onClick="openControl"
+            android:text="Mode Control"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginBottom="15dp"
+            />
+
+        <Button
+            android:id="@+id/btnAI"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="btnAI"
+            android:background="@color/whiteGray"
+            android:text="Mode AI"
+            android:layout_below="@id/openControl"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginBottom="15dp"
+            />
+
+        <Button
+            android:id="@+id/btnSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="btnSettings"
+            android:background="@color/whiteGray"
+            android:text="Paramètres"
+            android:layout_below="@id/btnAI"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+
+            />
+    </RelativeLayout>
+
+
+</RelativeLayout>
