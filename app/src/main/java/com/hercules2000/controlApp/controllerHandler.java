@@ -10,20 +10,19 @@ public class controllerHandler {
 
     public static void initMotors()
     {
-        String dollarRequest = getDollar();
+            String dollarRequest = getDollar();
 
-        Tanguage = new Moteur("Tanguage", -90, 90);
-        setCurrentState(Tanguage,dollarRequest);
-        Roulis = new Moteur("Roulis", -160, 160);
-        setCurrentState(Roulis,dollarRequest);
-        Coude = new Moteur("Coude", -124, 82);
-        setCurrentState(Coude,dollarRequest);
-        Epaule = new Moteur("Epaule", -115, 91);
-        setCurrentState(Epaule,dollarRequest);
-        Base = new Moteur("Base", -160, 160);
-        setCurrentState(Base,dollarRequest);
+            Tanguage = new Moteur("Tanguage", -90, 90);
+            setCurrentState(Tanguage, dollarRequest);
+            Roulis = new Moteur("Roulis", -160, 160);
+            setCurrentState(Roulis, dollarRequest);
+            Coude = new Moteur("Coude", -124, 82);
+            setCurrentState(Coude, dollarRequest);
+            Epaule = new Moteur("Epaule", -115, 91);
+            setCurrentState(Epaule, dollarRequest);
+            Base = new Moteur("Base", -160, 160);
+            setCurrentState(Base, dollarRequest);
     }
-
 
     public static String getDollar()
     {

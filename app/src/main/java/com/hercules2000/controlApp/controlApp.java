@@ -187,6 +187,15 @@ public class controlApp extends AppCompatActivity {
         alert.show();
     }
 
+    public void viewCmd(View v){
+
+        if(cmdApr == ""){
+            showDialog("Commande complexe" , "Cliquez sur Ajouter pour former votre commande complexe");
+        }else{
+            showDialog("Commande complexe" , cmdApr);
+
+        }
+    }
 
     public CheckBox getModeApr() {
         return modeApr;

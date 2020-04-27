@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/typoLogo"
-        android:layout_width="335dp"
-        android:layout_height="82dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:srcCompat="@mipmap/logotypo"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
