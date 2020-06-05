@@ -3,6 +3,7 @@ package com.hercules2000.controlApp;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -30,6 +31,8 @@ import static com.hercules2000.controlApp.controllerHandler.Tanguage;
 
 import android.widget.Toast;
 
+import java.util.HashMap;
+
 public class controlApp extends AppCompatActivity {
     private TextView nomMoteur, angletxtValue;
     public static Croller knobVitesse;
@@ -38,10 +41,11 @@ public class controlApp extends AppCompatActivity {
     char lettreMoteurSelectionner;
     private Moteur MoteurSelected;
     static boolean isAprMode = false;
-    private String cmdApr = "";
+    private HashMap cmdApr = new HashMap<Character,String>();
     private CheckBox modeApr;
     private Button btnAjouter;
     public static int angleSaisie;
+    private  String TAG = "VIEW";
     private View.OnTouchListener listener = new View.OnTouchListener() {
 
         public boolean onTouch(View v, MotionEvent event) {
@@ -145,25 +149,25 @@ public class controlApp extends AppCompatActivity {
 
     public void btnBras(View v) {
         initMoteur(Tanguage);
-        Toast.makeText(getApplicationContext(), "Tangage Envoyée", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Tangage selectionnée", Toast.LENGTH_SHORT).show();
 
     }
 
     public void btnCoude(View v) {
         initMoteur(Coude);
-        Toast.makeText(getApplicationContext(), "Coude Envoyée", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Coude selectionné", Toast.LENGTH_SHORT).show();
 
     }
 
     public void btnEpaule(View v) {
         initMoteur(Epaule);
-        Toast.makeText(getApplicationContext(), "Epaule Envoyée", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Epaule selectionnée", Toast.LENGTH_SHORT).show();
 
     }
 
     public void btnBase(View v) {
         initMoteur(Base);
-        Toast.makeText(getApplicationContext(), "Base Envoyée", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Base selectionnée", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -177,8 +181,12 @@ public class controlApp extends AppCompatActivity {
                 if (cmdApr.isEmpty()) {
                     showDialog("Erreur", "Veuillez ajouter un moteur");
                 } else {
-                    connectionUtils.sendMessage("L" + cmdApr);
-                    cmdApr = "";
+                    String commande = "L";
+                    for(Object key :  cmdApr.keySet()){
+                        commande+= (String)cmdApr.get(key);
+                    }
+                    connectionUtils.sendMessage(commande);
+                    cmdApr.clear();
                     Toast.makeText(getApplicationContext(), "Commande Envoyée", Toast.LENGTH_SHORT).show();
 
                 }
@@ -198,10 +206,11 @@ public class controlApp extends AppCompatActivity {
     public void btnAjouter(View v) {
 
         if (lettreMoteurSelectionner != 0) {
-            if (!MoteurSelected.existsIn(cmdApr)) {
-                cmdApr = cmdApr + controllerHandler.Commande(MoteurSelected).replace("L", "");
+            if (!cmdApr.containsKey(lettreMoteurSelectionner)) {
+                cmdApr.put(lettreMoteurSelectionner,controllerHandler.Commande(MoteurSelected).replace("L", ""));
             } else {
-                showDialog("Existe deja", "" + MoteurSelected.getLettreMoteur());
+                showDialog("Existe deja et va etre modifié", controllerHandler.Commande(MoteurSelected).replace("L", ""));
+                cmdApr.put(lettreMoteurSelectionner,controllerHandler.Commande(MoteurSelected).replace("L", ""));
             }
         } else {
             showDialog("Erreur", "Veuillez choisir un moteur");
@@ -242,11 +251,15 @@ public class controlApp extends AppCompatActivity {
 
     public void viewCmd(View v) {
 
-        if (isAprMode())
-            if (cmdApr == "") {
+        if (getModeApr().isChecked())
+            if (cmdApr.isEmpty()) {
                 showDialog("Commande complexe", "Cliquez sur Ajouter pour former votre commande complexe");
             } else {
-                showDialog("Commande complexe", cmdApr);
+                String commande="";
+                for(Object key :  cmdApr.keySet()){
+                    commande+= (String)cmdApr.get(key);
+                }
+                showDialog("Commande complexe", commande);
 
             }
         else {
