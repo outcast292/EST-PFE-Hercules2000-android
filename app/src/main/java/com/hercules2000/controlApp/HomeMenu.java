@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import com.hercules2000.control.connectionUtils;
 import com.hercules2000.control.connectionActivity;
+import com.hercules2000.control.modeAI;
 
 public class HomeMenu extends AppCompatActivity {
 
@@ -38,8 +39,11 @@ public class HomeMenu extends AppCompatActivity {
     }
 
     public void btnAI(View v){
+
+
         if(connectionUtils.ismRun()) {
-            connectionUtils.sendMessage("setmode 2");
+            Intent intent = new Intent(this, modeAI.class);
+            startActivity(intent);
         }else{
             showDialog("Erreur","Veuillez vous connectez!");
         }

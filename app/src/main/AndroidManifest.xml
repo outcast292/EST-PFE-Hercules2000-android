@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hercules2000.controlApp">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/icn_app"
@@ -9,9 +11,11 @@
         android:roundIcon="@mipmap/ugh"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.hercules2000.control.connectionActivity" android:theme="@style/AppTheme.SlidrActivityTheme"></activity>
-        <activity android:name=".HomeMenu" >
-        </activity>
+        <activity android:name="com.hercules2000.control.modeAI"></activity>
+        <activity
+            android:name="com.hercules2000.control.connectionActivity"
+            android:theme="@style/AppTheme.SlidrActivityTheme" />
+        <activity android:name=".HomeMenu"></activity>
         <activity android:name=".HomeScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,8 +25,7 @@
         </activity>
         <activity
             android:name=".controlApp"
-            android:theme="@style/AppTheme.SlidrActivityTheme" >
-        </activity>
+            android:theme="@style/AppTheme.SlidrActivityTheme"></activity>
     </application>
 
 </manifest>
