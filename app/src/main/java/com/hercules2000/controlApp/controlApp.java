@@ -1,9 +1,16 @@
 package com.hercules2000.controlApp;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.widget.Button;
@@ -22,6 +29,10 @@ import static com.hercules2000.controlApp.controllerHandler.Epaule;
 import static com.hercules2000.controlApp.controllerHandler.Roulis;
 import static com.hercules2000.controlApp.controllerHandler.Tanguage;
 
+import android.widget.Toast;
+
+import java.util.HashMap;
+
 public class controlApp extends AppCompatActivity {
     private TextView nomMoteur, angletxtValue;
     public static Croller knobVitesse;
@@ -30,10 +41,29 @@ public class controlApp extends AppCompatActivity {
     char lettreMoteurSelectionner;
     private Moteur MoteurSelected;
     static boolean isAprMode = false;
-    private String cmdApr = "";
+    private HashMap cmdApr = new HashMap<Character,String>();
     private CheckBox modeApr;
     private Button btnAjouter;
     public static int angleSaisie;
+    private  String TAG = "VIEW";
+    private View.OnTouchListener listener = new View.OnTouchListener() {
+
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN: {
+                    v.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+                    v.invalidate();
+                    break;
+                }
+                case MotionEvent.ACTION_UP: {
+                    v.getBackground().clearColorFilter();
+                    v.invalidate();
+                    break;
+                }
+            }
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +88,21 @@ public class controlApp extends AppCompatActivity {
         paneCtrl = findViewById(R.id.paneCtrl);
         angletxtValue = findViewById(R.id.angletxtValue);
         modeApr = findViewById(R.id.isAppMode);
-        modeApr.setChecked(true);
         btnAjouter = findViewById(R.id.Ajouter);
+        btnAjouter.setEnabled(false);
+        //
+        findViewById(R.id.btnPince).setOnTouchListener(listener);
+        findViewById(R.id.btnMain).setOnTouchListener(listener);
+        findViewById(R.id.btnBras).setOnTouchListener(listener);
+        findViewById(R.id.btnCoude).setOnTouchListener(listener);
+        findViewById(R.id.btnEpaule).setOnTouchListener(listener);
+        findViewById(R.id.btnBase).setOnTouchListener(listener);
+
+
         vitesseValue();
         angleValue();
         Slidr.attach(this);
+
     }
 
     public void angleValue() {
@@ -74,7 +114,7 @@ public class controlApp extends AppCompatActivity {
                 angleSaisie = (int) value;
             }
         });
-     }
+    }
 
     public void vitesseValue() {
         knobVitesse.setOnCrollerChangeListener(new OnCrollerChangeListener() {
@@ -97,26 +137,38 @@ public class controlApp extends AppCompatActivity {
 
     public void btnPince(View v) {
         showDialog("Erreur", "En cours de construction");
+        //Toast.makeText(getApplicationContext(), "Pin", Toast.LENGTH_SHORT).show();
+
     }
 
     public void btnMain(View v) {
-        initMoteur(Tanguage);
+        initMoteur(Roulis);
+        Toast.makeText(getApplicationContext(), "Roulis selectionné", Toast.LENGTH_SHORT).show();
+
     }
 
     public void btnBras(View v) {
-        initMoteur(Roulis);
+        initMoteur(Tanguage);
+        Toast.makeText(getApplicationContext(), "Tangage selectionnée", Toast.LENGTH_SHORT).show();
+
     }
 
     public void btnCoude(View v) {
         initMoteur(Coude);
+        Toast.makeText(getApplicationContext(), "Coude selectionné", Toast.LENGTH_SHORT).show();
+
     }
 
     public void btnEpaule(View v) {
         initMoteur(Epaule);
+        Toast.makeText(getApplicationContext(), "Epaule selectionnée", Toast.LENGTH_SHORT).show();
+
     }
 
     public void btnBase(View v) {
         initMoteur(Base);
+        Toast.makeText(getApplicationContext(), "Base selectionnée", Toast.LENGTH_SHORT).show();
+
     }
 
 
@@ -125,56 +177,66 @@ public class controlApp extends AppCompatActivity {
         if (!connectionUtils.ismRun()) {
             showDialog("Socket", "Veullez vous connectez!");
         } else if (lettreMoteurSelectionner != 0) {
-            if(getModeApr().isChecked())
-            {
-                if (cmdApr.isEmpty()){
-                   showDialog("Erreur", "Veuillez ajouter un moteur");
+            if (getModeApr().isChecked()) {
+                if (cmdApr.isEmpty()) {
+                    showDialog("Erreur", "Veuillez ajouter un moteur");
+                } else {
+                    String commande = "L";
+                    for(Object key :  cmdApr.keySet()){
+                        commande+= (String)cmdApr.get(key);
+                    }
+                    connectionUtils.sendMessage(commande);
+                    cmdApr.clear();
+                    Toast.makeText(getApplicationContext(), "Commande Envoyée", Toast.LENGTH_SHORT).show();
+
                 }
-                else{
-                    connectionUtils.sendMessage("L" + cmdApr);
-                    cmdApr = "";
-                 }
+            } else {
+                if (MoteurSelected.getCurAngle() == getAngleSaisie())
+                    showDialog("Erreur", "l'angle saisie est equivalent a l'angle d'orgine");
+                else {
+                    connectionUtils.sendMessage(controllerHandler.Commande(MoteurSelected));
+                    Toast.makeText(getApplicationContext(), "Commande Envoyée", Toast.LENGTH_SHORT).show();
+                }
             }
-            else {
-                connectionUtils.sendMessage(controllerHandler.Commande(MoteurSelected));
-            }
-        }
-        else showDialog("Erreur", "Veuillez choisir un moteur");
+
+        } else showDialog("Erreur", "Veuillez choisir un moteur");
 
     }
 
-    public void btnAjouter(View v){
+    public void btnAjouter(View v) {
 
-        if(lettreMoteurSelectionner != 0){
-            if(!MoteurSelected.existsIn(cmdApr)){
-                cmdApr = cmdApr + controllerHandler.Commande(MoteurSelected).replace("L","");
-            }else{
-                showDialog("Existe deja",  "" + MoteurSelected.getLettreMoteur());
+        if (lettreMoteurSelectionner != 0) {
+            if (!cmdApr.containsKey(lettreMoteurSelectionner)) {
+                cmdApr.put(lettreMoteurSelectionner,controllerHandler.Commande(MoteurSelected).replace("L", ""));
+            } else {
+                showDialog("Existe deja et va etre modifié", controllerHandler.Commande(MoteurSelected).replace("L", ""));
+                cmdApr.put(lettreMoteurSelectionner,controllerHandler.Commande(MoteurSelected).replace("L", ""));
             }
-        }else{
+        } else {
             showDialog("Erreur", "Veuillez choisir un moteur");
         }
 
     }
+
     public void onClickCheckBox(View v) {
 
-        if(getModeApr().isChecked()){
+        if (getModeApr().isChecked()) {
             btnAjouter.setEnabled(true);
-        }
-        else{
+        } else {
             btnAjouter.setEnabled(false);
         }
 
     }
+
     public void initMoteur(Moteur m) {
-            knobAngle.setAbsoluteMinMaxValue(m.getMinAngle(), m.getMaxAngle());
-            nomMoteur.setText(m.getNomMoteur());
-            knobAngle.setProgress(m.getCurAngle());
-            knobVitesse.setProgress(29);
-            lettreMoteurSelectionner = m.getLettreMoteur();
-            MoteurSelected = m;
-            angletxtValue.setText("Angle de rotation : " + m.getCurAngle() + "°");
-            angleSaisie = m.getCurAngle();
+        knobAngle.setAbsoluteMinMaxValue(m.getMinAngle(), m.getMaxAngle());
+        nomMoteur.setText(m.getNomMoteur());
+        knobAngle.setProgress(m.getCurAngle());
+        knobVitesse.setProgress(29);
+        lettreMoteurSelectionner = m.getLettreMoteur();
+        MoteurSelected = m;
+        angletxtValue.setText("Angle de rotation : " + m.getCurAngle() + "°");
+        angleSaisie = m.getCurAngle();
     }
 
     public void showDialog(String title, String message) {
@@ -187,29 +249,45 @@ public class controlApp extends AppCompatActivity {
         alert.show();
     }
 
-    public void viewCmd(View v){
+    public void viewCmd(View v) {
 
-        if(cmdApr == ""){
-            showDialog("Commande complexe" , "Cliquez sur Ajouter pour former votre commande complexe");
-        }else{
-            showDialog("Commande complexe" , cmdApr);
+        if (getModeApr().isChecked())
+            if (cmdApr.isEmpty()) {
+                showDialog("Commande complexe", "Cliquez sur Ajouter pour former votre commande complexe");
+            } else {
+                String commande="";
+                for(Object key :  cmdApr.keySet()){
+                    commande+= (String)cmdApr.get(key);
+                }
+                showDialog("Commande complexe", commande);
+
+            }
+        else {
+            if (MoteurSelected != null) {
+                if (MoteurSelected.getCurAngle() != getAngleSaisie())
+                    showDialog("Commande complexe", MoteurSelected.getLettreMoteur() + ((controllerHandler.map_value(getAngleSaisie(), MoteurSelected.getMinAngle(), MoteurSelected.getMaxAngle(), -511, 511) > 0) ? "+" : "-") + String.format("%03d", controllerHandler.map_value( getAngleSaisie(), MoteurSelected.getMinAngle(), MoteurSelected.getMaxAngle(), -511, 511)) + ":" + String.format("%02d", knobVitesse.getProgress()));
+                else
+                    showDialog("Erreur", "l'angle saisie est equivalent a l'angle d'orgine");
+            } else {
+                showDialog("Erreur", "aucun moteur n'est choisi");
+
+            }
 
         }
     }
+        public CheckBox getModeApr () {
+            return modeApr;
+        }
 
-    public CheckBox getModeApr() {
-        return modeApr;
-    }
+        public static boolean isAprMode () {
+            return isAprMode;
+        }
 
-    public static boolean isAprMode() {
-        return isAprMode;
-    }
+        public static StartPointSeekBar getKnobAngle () {
+            return knobAngle;
+        }
 
-    public static StartPointSeekBar getKnobAngle() {
-        return knobAngle;
+        public static int getAngleSaisie () {
+            return angleSaisie;
+        }
     }
-
-    public static int getAngleSaisie() {
-        return angleSaisie;
-    }
-}

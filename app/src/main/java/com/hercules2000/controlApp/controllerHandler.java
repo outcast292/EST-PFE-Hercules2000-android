@@ -48,6 +48,9 @@ public class controllerHandler {
 
         return commande;
     }
+
+
+
     public static void setCurrentState(Moteur m, String dollarRequest){
 
         int angle=0;
@@ -64,7 +67,7 @@ public class controllerHandler {
         }
 
     }
-    private static int map_value(int x, int in_min, int in_max, int out_min, int out_max)
+    public static int map_value(int x, int in_min, int in_max, int out_min, int out_max)
     {
         return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
     }
