@@ -10,7 +10,6 @@ import com.hercules2000.controlApp.R;
 
 public class modeAI extends AppCompatActivity {
 
-    text
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

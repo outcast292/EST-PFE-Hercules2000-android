@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -15,6 +16,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hercules2000.control.connectionActivity;
@@ -37,15 +40,17 @@ public class controlApp extends AppCompatActivity {
     private TextView nomMoteur, angletxtValue;
     public static Croller knobVitesse;
     private static StartPointSeekBar knobAngle;
-    private ConstraintLayout paneCtrl;
+    private RelativeLayout paneCtrl;
     char lettreMoteurSelectionner;
     private Moteur MoteurSelected;
     static boolean isAprMode = false;
+    static boolean isOpen = true;
     private HashMap cmdApr = new HashMap<Character,String>();
     private CheckBox modeApr;
     private Button btnAjouter;
     public static int angleSaisie;
     private  String TAG = "VIEW";
+    private ImageButton btnPince;
     private View.OnTouchListener listener = new View.OnTouchListener() {
 
         public boolean onTouch(View v, MotionEvent event) {
@@ -90,7 +95,8 @@ public class controlApp extends AppCompatActivity {
         modeApr = findViewById(R.id.isAppMode);
         btnAjouter = findViewById(R.id.Ajouter);
         btnAjouter.setEnabled(false);
-        //
+        btnPince = findViewById(R.id.btnPince);
+
         findViewById(R.id.btnPince).setOnTouchListener(listener);
         findViewById(R.id.btnMain).setOnTouchListener(listener);
         findViewById(R.id.btnBras).setOnTouchListener(listener);
@@ -136,8 +142,16 @@ public class controlApp extends AppCompatActivity {
     }
 
     public void btnPince(View v) {
-        showDialog("Erreur", "En cours de construction");
-        //Toast.makeText(getApplicationContext(), "Pin", Toast.LENGTH_SHORT).show();
+
+        if(isOpen){
+            connectionUtils.sendMessage("LP+511:30");
+            Toast.makeText(getApplicationContext(), "Fermeture de la pincette", Toast.LENGTH_SHORT).show();
+            isOpen = false;
+        }else{
+            connectionUtils.sendMessage("LP-511:30");
+            Toast.makeText(getApplicationContext(), "Ouverture de la pincette", Toast.LENGTH_SHORT).show();
+            isOpen = true;
+        }
 
     }
 
