@@ -91,7 +91,7 @@
             android:layout_height="65dp"
             android:layout_marginTop="20dp"
             android:onClick="connectBtn"
-            android:text="Connect"
+            android:text="Se connecter"
             android:textAlignment="center" />
 
     </TableRow>

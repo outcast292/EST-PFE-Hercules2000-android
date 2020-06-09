@@ -65,7 +65,7 @@ public class connectionActivity extends AppCompatActivity {
     public void __ifConnected(){
             if (connectionUtils.ismRun())
             {
-                conBtn.setText("Disconnect");
+                conBtn.setText("Se deconnecter");
                 conBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -80,7 +80,7 @@ public class connectionActivity extends AppCompatActivity {
     {
         if (!connectionUtils.ismRun())
         {
-            conBtn.setText("Connect");
+            conBtn.setText("Se connecter");
             conBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
