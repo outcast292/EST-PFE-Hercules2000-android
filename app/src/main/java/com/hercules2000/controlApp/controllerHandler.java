@@ -27,7 +27,6 @@ public class controllerHandler {
     public static String getDollar()
     {
         connectionUtils.sendMessage("$");
-
         return connectionUtils.readMessage().toString() ;
 
     }
@@ -61,7 +60,8 @@ public class controllerHandler {
             {
                 if(dollarRequest.charAt(i) == m.getLettreMoteur()){
                     angle = parseInt(dollarRequest.substring(i+1,i+5));
-                    m.setCurAngle(angle);
+                    int  real_angle = map_reversevalue(angle,m.getMinAngle(),m.getMaxAngle());
+                    m.setCurAngle(real_angle);
                 }
             }
         }
@@ -69,6 +69,13 @@ public class controllerHandler {
     }
     public static int map_value(int x, int in_min, int in_max, int out_min, int out_max)
     {
+        return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+    }
+
+    public static int map_reversevalue(int x, int out_min, int out_max)
+    {
+        int in_min = -511;
+        int in_max = 511;
         return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
     }
 
